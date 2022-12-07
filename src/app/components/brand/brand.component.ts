@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Brand } from 'src/app/models/brand';
 import {HttpClient} from '@angular/common/http';
-import { BrandResponseModule } from 'src/app/models/brandResponseModule';
 import { Observable } from 'rxjs';
 import { BrandService } from 'src/app/services/brand.service';
 
@@ -13,6 +12,7 @@ import { BrandService } from 'src/app/services/brand.service';
 export class BrandComponent implements OnInit{
 
   brands:Brand[] = [];
+  currentBrand:Brand;
   constructor(private brandService:BrandService){}
 
   ngOnInit(): void {
@@ -23,5 +23,8 @@ export class BrandComponent implements OnInit{
     this.brandService.getBrands().subscribe((response)=>{
       this.brands = response.data;
     });
+  }
+  setCurrentBrand(brand:Brand){
+    this.currentBrand = brand;
   }
 }

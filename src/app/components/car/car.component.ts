@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { HttpClient } from '@angular/common/http';
-import { CarResponseModel } from 'src/app/models/carResponseModel';
 import { CarService } from 'src/app/services/car.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-car',
@@ -11,14 +11,25 @@ import { CarService } from 'src/app/services/car.service';
 })
 export class CarComponent {
   cars:Car[] = []; 
-  constructor(private carService:CarService){}
+  constructor(private carService:CarService, private activatedRoute:ActivatedRoute ){}
 
   ngOnInit(): void {
-    this.getCars();
+    this.activatedRoute.params.subscribe(params=>{
+      if(params["brandId"]){
+        this.getCarsByBrand(params["brandId"]);
+      }else{
+        this.getCars();
+      }
+    })
   }
 
   getCars(){
     this.carService.getCars().subscribe((response)=>{
+      this.cars = response.data;
+    });
+  }
+  getCarsByBrand(brandId:number){
+    this.carService.getCarsByBrand(brandId).subscribe((response)=>{
       this.cars = response.data;
     });
   }
