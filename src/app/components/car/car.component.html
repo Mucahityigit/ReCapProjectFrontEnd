@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let car of cars">
+    <tr routerLink="/cars/getcardetailpage/{{car.carId}}" *ngFor="let car of cars">
       <td>{{car.carId}}</td>
       <td>{{car.brandName}}</td>
       <td>{{car.colorName}}</td>
@@ -20,3 +20,4 @@
     </tr>
   </tbody>
 </table>
+
